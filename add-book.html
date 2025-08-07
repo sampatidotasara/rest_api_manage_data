@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Add Book</title>
+</head>
+<body>
+  <h2>Add a New Book</h2>
+  <form id="bookForm">
+    <input type="text" id="title" placeholder="Title" required><br><br>
+    <input type="text" id="author" placeholder="Author" required><br><br>
+    <button type="submit">Add Book</button>
+  </form>
+
+  <pre id="response"></pre>
+
+  <script>
+    document.getElementById('bookForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const title = document.getElementById('title').value;
+      const author = document.getElementById('author').value;
+
+      const response = await fetch('http://localhost:3000/books', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ title, author })
+      });
+
+      const result = await response.json();
+      document.getElementById('response').textContent = JSON.stringify(result, null, 2);
+    });
+  </script>
+</body>
+</html>
+
